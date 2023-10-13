@@ -68,7 +68,6 @@ def question_answer(choose_char: str, user_query: str, db):
                 an answer. Use three sentences maximum and keep the answer as concise as 
                 possible. Answer from the perspective of """+choose_char+". "+user_query
     retriever = db.as_retriever()
-    OpenAI_key = os.environ.get("OPENAI_API_KEY")
     llm = ChatOpenAI(model_name="gpt-3.5-turbo", temperature=0, verbose=True, openai_api_key=OpenAI_key)
     qa = RetrievalQA.from_chain_type(llm, 
                                     chain_type='stuff', 
@@ -77,8 +76,8 @@ def question_answer(choose_char: str, user_query: str, db):
     answer = qa.run(query)
     return answer
 
-
-
+# get openai key
+OpenAI_key = os.environ.get("OPENAI_API_KEY")
 # get embedding
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 # get files
