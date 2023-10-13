@@ -6,4 +6,6 @@ RUN pip install -r requirements.txt
 
 COPY ./serving ./serving
 
+COPY ./lore ./lore
+
 CMD ["uvicorn", "serving.app:app", "--host", "0.0.0.0", "--port", "80"]
