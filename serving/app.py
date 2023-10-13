@@ -12,7 +12,6 @@ import openai
 import os
 from os.path import isfile, join
 from langchain.document_loaders import TextLoader
-from getpass import getpass
 import time
 import json
 
