@@ -60,6 +60,8 @@ characters = {'Leo': ['coxet', '1'],
 def doc_into_db(split_doc, embedding_function: SentenceTransformerEmbeddings, choose_char: str):
     db = Chroma.from_documents(split_doc, embedding_function, collection_name=choose_char)
     characters[choose_char].append(db)
+    return characters
+
 
 
 def question_answer(choose_char: str, user_query: str, db):
@@ -100,10 +102,11 @@ async def ask_api(character_name: str, user_query: str) -> str:
     # log timing and network
     started_at = time.time()
     # process
-    split_doc = pick_split_docs(all_lore, characters, character_name)
-    doc_into_db(split_doc, embedding_function, character_name)
-    db = characters[character_name][2]
-    answer = question_answer(character_name, user_query, db)
+    if len(characters[character_name]) < 3:
+        split_doc = pick_split_docs(all_lore, characters, character_name)
+        characters = doc_into_db(split_doc, embedding_function, character_name)
+    my_db = characters[character_name][2]
+    answer = question_answer(character_name, user_query, my_db)
     # log stats
     total_time = time.time() - started_at
     log = {
