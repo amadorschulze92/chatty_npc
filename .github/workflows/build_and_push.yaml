@@ -16,6 +16,8 @@ jobs:
         -   name: OpenAI
             env:
               OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+            run: |
+              ls
         -   name: Login to Amazon ECR
             id: login-ecr
             uses: aws-actions/amazon-ecr-login@v1
