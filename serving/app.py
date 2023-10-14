@@ -62,6 +62,9 @@ def doc_into_db(split_doc, embedding_function: SentenceTransformerEmbeddings, ch
     return characters
 
 
+# get openai key
+OpenAI_key = os.environ.get("OPENAI_API_KEY")
+
 
 def question_answer(choose_char: str, user_query: str, db):
     query = """If you don't know the answer, just say that you don't know, don't try to make up 
@@ -76,8 +79,7 @@ def question_answer(choose_char: str, user_query: str, db):
     answer = qa.run(query)
     return answer
 
-# get openai key
-OpenAI_key = os.environ.get("OPENAI_API_KEY")
+
 # get embedding
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 # get files
