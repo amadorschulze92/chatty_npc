@@ -80,6 +80,7 @@ def question_answer(choose_char: str, user_query: str, db):
     return answer
 
 
+
 # get embedding
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 # get files
