@@ -8,7 +8,6 @@ from langchain.document_loaders.merge import MergedDataLoader
 from langchain.vectorstores import Chroma
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.embeddings.sentence_transformer import SentenceTransformerEmbeddings
-import openai
 import os
 from os.path import isfile, join
 from langchain.document_loaders import TextLoader
@@ -82,7 +81,7 @@ def question_answer(choose_char: str, user_query: str, db):
 # get embedding
 embedding_function = SentenceTransformerEmbeddings(model_name="all-MiniLM-L6-v2")
 # get files
-all_lore = read_lore('../lore/')
+all_lore = read_lore('./lore/')
 world = all_lore['world']
 local = all_lore['local']
 personal = all_lore['personal']
