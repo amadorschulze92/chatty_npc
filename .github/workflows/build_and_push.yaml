@@ -15,9 +15,6 @@ jobs:
               aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
               aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
               aws-region: "us-east-2"
-        -   name: Check for OpenAI
-            run: |
-              printenv | sed 's;=.*;;' | grep "OPENAI_API_KEY.*"
         -   name: Login to Amazon ECR
             id: login-ecr
             uses: aws-actions/amazon-ecr-login@v1
@@ -32,3 +29,6 @@ jobs:
             run: |
               docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
               docker push -a $ECR_REGISTRY/$ECR_REPOSITORY
+        -   name: Check for OpenAI
+            run: |
+              printenv | sed 's;=.*;;' | grep "OPENAI_API_KEY.*"
