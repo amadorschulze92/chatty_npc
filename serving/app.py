@@ -119,8 +119,7 @@ async def ask_api(character_name: str, user_query: str) -> str:
 @app.get("/amihere")
 def get_root() -> dict:
     logger.info("Received request for am i here")
-    os.system('printenv | sed "s;=.*;;" | grep "OPENAI_API_KEY.*"')
-    return {"status": "not sure"}
+    return {"status": os.system('printenv | sed "s;=.*;;" | grep "OPENAI_API_KEY.*"')}
 
 
 # gradio app
