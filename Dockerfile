@@ -7,8 +7,7 @@ RUN pip install --upgrade pip
 RUN pip install -r requirements.txt
 
 RUN --mount=type=secret,id=OPENAI_API_KEY \
-    export OPENAI_API_KEY=$(cat /run/secrets/OPENAI_API_KEY) && \
-    yarn gen
+    export OPENAI_API_KEY=$(cat /run/secrets/OPENAI_API_KEY)
 
 COPY ./serving ./serving
 
