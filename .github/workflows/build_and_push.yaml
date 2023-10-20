@@ -4,8 +4,6 @@ on: [push]
 jobs: 
     build-and-push:
         runs-on: ubuntu-latest
-        env:
-          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
         steps:
         -   name: Checkout repo
             uses: actions/checkout@v3
@@ -20,6 +18,14 @@ jobs:
             uses: aws-actions/amazon-ecr-login@v1
             with:
               mask-password: 'true'
+        - name: Build Docker
+          id: docker_build
+          uses: docker/build-push-action@v2
+          with:
+            push: false
+            tags: g2idocker/auth:latest
+            secrets: |
+              "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}"
         -   name: Build, tag, and push image to Amazon ECR
             id: build-image
             env:
@@ -27,6 +33,5 @@ jobs:
               ECR_REPOSITORY: chatty_npc
               IMAGE_TAG: ${{ github.sha }}
             run: |
-              docker build --build-arg OPENAI_API_KEY=$OPENAI_API_KEY
               docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -t $ECR_REGISTRY/$ECR_REPOSITORY:latest .
               docker push -a $ECR_REGISTRY/$ECR_REPOSITORY

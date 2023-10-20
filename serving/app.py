@@ -116,12 +116,6 @@ async def ask_api(character_name: str, user_query: str) -> str:
     return answer
 
 
-@app.get("/amihere")
-def get_root() -> dict:
-    logger.info("Received request for am i here")
-    return {"status": os.system('printenv | sed "s;=.*;;" | grep "OPENAI_API_KEY.*"')}
-
-
 # gradio app
 def gradio_question_answer(character_name, question):
     split_doc = pick_split_docs(all_lore, characters, character_name)
